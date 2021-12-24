@@ -14,7 +14,7 @@ type User struct {
 	Id       string `json:"id"`
 	Username string `json:"username"`
 }
-type sqlResponse struct {
+type SqlResponse struct {
 	Code    int         `json:"code"`
 	Message string      `json:"message"`
 	Data    interface{} `json:"data"`
@@ -50,14 +50,19 @@ func main() {
 			// log.Print("temp", userTemp)
 			resUser = append(resUser, userTemp)
 		}
-		log.Print("data", resUser)
+		// log.Print("data", resUser)
 
-		// fmt.Print(rows)
+		fmt.Print(resUser)
 		if err != nil {
 			fmt.Print(err)
 			return
 		}
-		c.JSON(http.StatusOK, resUser)
+		var sqlResponse SqlResponse
+		sqlResponse.Code = http.StatusOK
+		sqlResponse.Message = "操作成功"
+		sqlResponse.Data = resUser
+
+		c.JSON(http.StatusOK, sqlResponse)
 
 		// c.JSON(http.StatusOK, gin.H{
 		// 	"status":  "200",
