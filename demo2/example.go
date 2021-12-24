@@ -35,6 +35,7 @@ func main() {
 
 	r := gin.Default()
 
+	// 查询所有用户
 	r.GET("/list", func(c *gin.Context) {
 		resUser := make([]User, 0)
 		rows, err := db.Query("select id,username from sys_user")
@@ -69,6 +70,27 @@ func main() {
 		// 	"message": "查询成功",
 		// 	"data":    resUser,
 		// })
+	})
+	// 添加用户
+	r.POST("/register", func(c *gin.Context) {
+
+		username := c.PostForm("username")
+		password := c.PostForm("password")
+		log.Print("username", username)
+		log.Print("password", password)
+		res, err := db.Exec("INSERT INTO sys_user (username, password) VALUES (?,?)", username, password)
+		if err != nil {
+			log.Print("插入数据失败")
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"status":  "200",
+			"message": "请求成功",
+			"data":    res,
+		})
+		// db.Exec("")
+
 	})
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
