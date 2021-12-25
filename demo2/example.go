@@ -96,14 +96,20 @@ func main() {
 	// 更新用户信息
 	r.POST("/update", func(c *gin.Context) {
 		username := c.PostForm("username")
-		password := c.PostForm("password")
+		phone := c.PostForm("phone")
 		email := c.PostForm("email")
 		id := c.PostForm("id")
 		log.Print("username", username)
-		log.Print("password", password)
+		log.Print("phone", phone)
 		log.Print("email", email)
 		log.Print("id", id)
-		res, err := db.Exec("UPDATE  sys_user SET username = ?, password=?,email=? where id = ?", username, password, email, id)
+		sql := "UPDATE  sys_user SET username = ?, phone=?,email=? where id = ?"
+
+		// todo 逻辑待完善
+		// if(username !="" && phone!="" && email!=""){
+		// 	sql = "UPDATE  sys_user SET username = ?, phone=?,email=? where id = ?"
+		// }else if(username == "" && phone)
+		res, err := db.Exec(sql, username, phone, email, id)
 		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
 				"status":  "500",
@@ -118,6 +124,27 @@ func main() {
 			"message": "操作成功",
 			"data":    res,
 		})
+	})
+	// 删除用户
+	r.POST("remove", func(c *gin.Context) {
+		id := c.PostForm("id")
+		sql := "DELETE FROM sys_user where id = ?"
+		res, err := db.Exec(sql, id)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"status":  "500",
+				"message": "操作失败",
+				"data":    res,
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"status":  "200",
+			"message": "操作成功",
+			"data":    res,
+		})
+
 	})
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
