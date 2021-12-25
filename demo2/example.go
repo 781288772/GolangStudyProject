@@ -72,6 +72,7 @@ func main() {
 		// })
 	})
 	// 添加用户
+	// 路径传参形式
 	r.POST("/register", func(c *gin.Context) {
 
 		username := c.PostForm("username")
@@ -86,11 +87,37 @@ func main() {
 
 		c.JSON(http.StatusOK, gin.H{
 			"status":  "200",
-			"message": "请求成功",
+			"message": "操作成功",
 			"data":    res,
 		})
 		// db.Exec("")
 
+	})
+	// 更新用户信息
+	r.POST("/update", func(c *gin.Context) {
+		username := c.PostForm("username")
+		password := c.PostForm("password")
+		email := c.PostForm("email")
+		id := c.PostForm("id")
+		log.Print("username", username)
+		log.Print("password", password)
+		log.Print("email", email)
+		log.Print("id", id)
+		res, err := db.Exec("UPDATE  sys_user SET username = ?, password=?,email=? where id = ?", username, password, email, id)
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"status":  "500",
+				"message": "操作失败",
+				"data":    res,
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"status":  "200",
+			"message": "操作成功",
+			"data":    res,
+		})
 	})
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
