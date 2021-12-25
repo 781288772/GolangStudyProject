@@ -21,7 +21,7 @@ type SqlResponse struct {
 }
 
 func main() {
-	db, _ := sql.Open("mysql", "root:root@(127.0.0.1:3306)/test")
+	db, _ := sql.Open("mysql", "root:123456@(127.0.0.1:3306)/test")
 
 	defer db.Close()
 	err := db.Ping()
@@ -76,10 +76,12 @@ func main() {
 	r.POST("/register", func(c *gin.Context) {
 
 		username := c.PostForm("username")
+		email := c.PostForm("email")
+		phone := c.PostForm("phone")
 		password := c.PostForm("password")
 		log.Print("username", username)
 		log.Print("password", password)
-		res, err := db.Exec("INSERT INTO sys_user (username, password) VALUES (?,?)", username, password)
+		res, err := db.Exec("INSERT INTO sys_user (username, password,email,phone) VALUES (?,?,?,?)", username, password, email, phone)
 		if err != nil {
 			log.Print("插入数据失败")
 			return
