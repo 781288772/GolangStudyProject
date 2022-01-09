@@ -14,3 +14,8 @@ func (c *MainController) Get() {
 	c.Data["word"] = "hello world"
 	c.TplName = "test.html"
 }
+
+func (c *MainController) Post() {
+	c.Data["word"] = "Post method"
+	c.TplName = "test.html"
+}
