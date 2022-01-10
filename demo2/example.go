@@ -46,11 +46,8 @@ func main() {
 				log.Fatal("scan failed: ", err)
 			}
 			log.Printf("id: %s username:%s\n", userTemp.Id, userTemp.Username)
-
-			// log.Print("temp", userTemp)
 			resUser = append(resUser, userTemp)
 		}
-		// log.Print("data", resUser)
 
 		fmt.Print(resUser)
 		if err != nil {
