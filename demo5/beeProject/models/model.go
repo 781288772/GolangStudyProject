@@ -6,6 +6,8 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+//表的设计
+
 //定义一个结构体
 type User struct {
 	Id       int
@@ -21,4 +23,5 @@ func init() {
 	//生成表
 	//第一个参数，数据库别名，第二个参数是否强制更新表
 	orm.RunSyncdb("default", false, true)
+
 }
