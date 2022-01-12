@@ -37,7 +37,7 @@ func (c *MainController) Post() {
 	c.TplName = "test.html"
 }
 
-func (c *MainController) showGet() {
+func (c *MainController) ShowGet() {
 	//获取orm对象
 	o := orm.NewOrm()
 	//执行某个操作 增删改查
