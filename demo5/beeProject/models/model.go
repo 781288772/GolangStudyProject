@@ -17,7 +17,7 @@ type User struct {
 
 func init() {
 	//获取连接对象
-	orm.RegisterDataBase("default", "mysql", "root:123456@tcp(127.0.0.1:3306)/test?charset=utf8")
+	orm.RegisterDataBase("default", "mysql", "root:root@tcp(127.0.0.1:3306)/test?charset=utf8")
 	//创建表
 	orm.RegisterModel(new(User))
 	//生成表

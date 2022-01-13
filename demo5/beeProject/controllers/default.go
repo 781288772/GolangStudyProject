@@ -54,3 +54,17 @@ func (c *MainController) ShowGet() {
 	logs.Debug("count", count)
 
 }
+func (c *MainController) UpdateUser() {
+	o := orm.NewOrm()
+	var user models.User
+	user.Id = 1
+	user.Name = "XIUGA"
+
+	count, err := o.Update(&user)
+	if err != nil {
+		logs.Error("查询数据失败")
+		return
+	}
+	logs.Debug("count", count)
+
+}
